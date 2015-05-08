@@ -1,1 +1,2 @@
-# sample-spring-boot-web-application
+# menu-generator
+Menu generator webapp which suggests menus for cooking
