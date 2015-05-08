@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
  * @author Phillip Webb
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SampleWebSpringBootApplication.class)
+@SpringApplicationConfiguration(classes = GmfConfig.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
 @DirtiesContext

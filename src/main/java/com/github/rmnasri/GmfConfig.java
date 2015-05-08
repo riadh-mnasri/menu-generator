@@ -8,18 +8,21 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 
+/**
+ * Created by riadh on 07/05/15.
+ */
 @SpringBootApplication
 @EnableJpaRepositories
 @Import(RepositoryRestMvcConfiguration.class)
-public class SampleWebSpringBootApplication extends SpringBootServletInitializer {
+public class GmfConfig extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(SampleWebSpringBootApplication.class);
+        return application.sources(GmfConfig.class);
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(SampleWebSpringBootApplication.class, args);
+        SpringApplication.run(GmfConfig.class, args);
     }
 
 }

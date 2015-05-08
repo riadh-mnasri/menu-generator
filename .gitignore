@@ -1,13 +1,13 @@
-#Eclipse
-.classpath
-.project
-.settings/
-
 # Intellij
 .idea/
 *.iml
 *.iws
 out/
+
+#Eclipse
+.classpath
+.project
+.settings/
 
 # Mac
 .DS_Store
@@ -15,3 +15,6 @@ out/
 # Maven
 log/
 target/
+
+# Files
+*.log

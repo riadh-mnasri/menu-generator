@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * Created by riadh on 04/05/15.
  */
-@Service()
-public class RecetteServiceImpl {
+@Service
+public class RecetteService {
 
     @Autowired
     RecetteRepository recetteRepository;
