@@ -4,7 +4,7 @@
 *.iws
 out/
 
-#Eclipse
+# Eclipse
 .classpath
 .project
 .settings/
@@ -16,5 +16,5 @@ out/
 log/
 target/
 
-# Files
+# Generated Files
 *.log

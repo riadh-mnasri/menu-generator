@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Basic integration tests for JSP application.
  *
- * @author Phillip Webb
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = GmfConfig.class)
