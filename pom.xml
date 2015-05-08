@@ -4,19 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.rmnasri</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>menu-generator</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>demo</name>
-    <description>Demo project for Spring Boot</description>
+    <name>menu-generator</name>
+    <description>Menu generator webapp which suggests menus for cooking</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.2.3.RELEASE</version>
-        <relativePath/>
-        <!-- lookup parent from repository -->
     </parent>
 
     <properties>
