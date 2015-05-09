@@ -59,7 +59,10 @@ public class Recette {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = 0;
+        if(id != null){
+            result = id.hashCode();
+        }
         result = 31 * result + recetteName.hashCode();
         return result;
     }

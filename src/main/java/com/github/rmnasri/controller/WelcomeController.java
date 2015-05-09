@@ -31,31 +31,51 @@ public class WelcomeController {
     private RecetteService recetteService;
 
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addRecettePost(@ModelAttribute("recetteForm") RecetteForm recetteForm, BindingResult result) {
+    @RequestMapping(value = "/recette/save", method = RequestMethod.POST)
+    public ModelAndView addRecette(@ModelAttribute("recetteForm") RecetteForm recetteForm, BindingResult result) {
         ModelAndView mav = new ModelAndView("welcome");
         Recette recetteModel = mapRecette(recetteForm);
         Recette recetteSaved = recetteService.saveRecette(recetteModel);
         logger.info("Recette saved :: {}", recetteSaved);
+        addCommonDataToMav(mav);
+        return mav;
+    }
+
+    @RequestMapping(value = "/recette/delete/{id}")
+    public ModelAndView deleteRecette(@PathVariable("id") Long idRecette) {
+        ModelAndView mav = new ModelAndView("redirect:/gmf/welcome");
+        recetteService.deleteRecette(idRecette);
+        addCommonDataToMav(mav);
+        return mav;
+    }
+
+    protected Iterable<Recette> findAllRecettes() {
         Iterable<Recette> recettes = recetteService.findAllRecettes();
         for (Recette recetteTmp : recettes){
             logger.info("Found Recette :: {}", recetteTmp);
         }
-        return mav;
+        return recettes;
+    }
+
+    protected void addCommonDataToMav(ModelAndView mav) {
+        Iterable<Recette> recettes = findAllRecettes();
+        mav.addObject("time", new Date());
+        mav.addObject("message", GREETINGS+"World!");
+        mav.addObject("recettes", recettes);
     }
 
     private Recette mapRecette(@ModelAttribute("recetteForm") RecetteForm recetteForm) {
         Recette recetteModel = new Recette();
-        recetteModel.setId(recetteForm.getId());
+        //recetteModel.setId(recetteForm.getId());
         recetteModel.setRecetteName(recetteForm.getRecetteName());
         return recetteModel;
     }
 
     @RequestMapping(value = "/welcome")
-    public String welcome(Map<String, Object> model, @ModelAttribute("recetteForm") RecetteForm recetteForm) {
-        model.put("time", new Date());
-        model.put("message", GREETINGS+"World!");
-        return "welcome";
+    public ModelAndView welcome(Map<String, Object> model, @ModelAttribute("recetteForm") RecetteForm recetteForm) {
+        ModelAndView mav = new ModelAndView("welcome");
+        addCommonDataToMav(mav);
+        return mav;
     }
 
     @RequestMapping(value="/hello", method = RequestMethod.GET)
@@ -77,7 +97,7 @@ public class WelcomeController {
         return mav;
     }
 
-    private LocalDateTime getCurrentFormattedDate() {
+    protected LocalDateTime getCurrentFormattedDate() {
         LocalDateTime timePoint = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         timePoint.format(formatter);
