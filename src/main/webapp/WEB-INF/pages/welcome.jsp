@@ -37,8 +37,9 @@ Spring URL: ${springUrl} at ${time}--%>
     </tr>
   </table>
 </form:form>
-<div id="menu-list">
-  <table class="table table-striped table-bordered table-condensed">
+<c:if test="${not empty recettes}">
+ <div id="menu-list">
+  <table class="table table-striped table-bordered table-condensed" border="1">
     <tr>
       <th>Num&eacute;ro Recette</th>
       <th>Nom Recette</th>
@@ -55,7 +56,8 @@ Spring URL: ${springUrl} at ${time}--%>
       </tr>
     </c:forEach>
   </table>
-</div>
+ </div>
+</c:if>
 </body>
 
 </html>
