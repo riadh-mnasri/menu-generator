@@ -45,6 +45,7 @@ public class WelcomeController {
     @RequestMapping(value = "/recette/save", method = RequestMethod.POST)
     public ModelAndView saveRecette(@Valid @ModelAttribute("recetteForm") RecetteForm recetteForm, BindingResult result) {
         ModelAndView mav = new ModelAndView("welcome");
+        addCommonDataToMav(mav);
         if (result.hasErrors()) {
             LOGGER.debug("Error has occured when validating Recette Form!");
             return mav;
