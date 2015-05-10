@@ -2,12 +2,14 @@ package com.github.rmnasri.controller;
 
 import com.github.rmnasri.model.Recette;
 import com.github.rmnasri.service.RecetteService;
+import com.github.rmnasri.validator.RecetteValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,12 +18,13 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/gmf")
 public class WelcomeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(WelcomeController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WelcomeController.class);
 
 
     @Value("${application.message:Hello World}")
@@ -30,14 +33,27 @@ public class WelcomeController {
     @Autowired
     private RecetteService recetteService;
 
+    @Autowired
+    private RecetteValidator recetteValidator;
+
+
+    @InitBinder("recetteForm")
+    protected void initBinderRecette(WebDataBinder binder) {
+        binder.setValidator(recetteValidator);
+    }
 
     @RequestMapping(value = "/recette/save", method = RequestMethod.POST)
-    public ModelAndView addRecette(@ModelAttribute("recetteForm") RecetteForm recetteForm, BindingResult result) {
+    public ModelAndView saveRecette(@Valid @ModelAttribute("recetteForm") RecetteForm recetteForm, BindingResult result) {
         ModelAndView mav = new ModelAndView("welcome");
-        Recette recetteModel = mapRecette(recetteForm);
-        Recette recetteSaved = recetteService.saveRecette(recetteModel);
-        logger.info("Recette saved :: {}", recetteSaved);
-        addCommonDataToMav(mav);
+        if (result.hasErrors()) {
+            LOGGER.debug("Error has occured when validating Recette Form!");
+            return mav;
+        } else {
+            Recette recetteModel = mapRecette(recetteForm);
+            Recette recetteSaved = recetteService.saveRecette(recetteModel);
+            LOGGER.info("Recette saved :: {}", recetteSaved);
+            addCommonDataToMav(mav);
+        }
         return mav;
     }
 
@@ -52,7 +68,7 @@ public class WelcomeController {
     protected Iterable<Recette> findAllRecettes() {
         Iterable<Recette> recettes = recetteService.findAllRecettes();
         for (Recette recetteTmp : recettes){
-            logger.info("Found Recette :: {}", recetteTmp);
+            LOGGER.info("Found Recette :: {}", recetteTmp);
         }
         return recettes;
     }
