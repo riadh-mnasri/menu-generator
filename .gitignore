@@ -19,3 +19,7 @@ target/
 # Generated Files
 logs/
 *.log
+
+# Temporary directories and files
+backup/
+old/
