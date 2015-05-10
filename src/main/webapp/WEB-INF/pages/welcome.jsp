@@ -21,11 +21,13 @@ Spring URL: ${springUrl} at ${time}--%>
 <form:form method="POST" commandName="recetteForm" action="/gmf/recette/save">
   <form:errors path="*" cssClass="errorblock" element="div" />
   <table>
-    <!-- tr>
+    <c:if test="${not empty recetteForm.id}">
+    <tr>
       <td>Num&eacute;ro recette :</td>
       <td><form:input path="id" />
       </td>
-    </tr-->
+    </tr>
+    </c:if>
     <tr>
       <td>Nom recette :</td>
       <td><form:input path="recetteName" />
@@ -49,7 +51,7 @@ Spring URL: ${springUrl} at ${time}--%>
       <tr>
         <td>${recette.id}</td>
         <td>${recette.recetteName}</td>
-        <td><a href='${pageContext.request.contextPath}/gmf/recette/save/${recette.id}'
+        <td><a href='${pageContext.request.contextPath}/gmf/recette/edit/${recette.id}'
                class="btn btn-primary">edit</a>
           <a href='${pageContext.request.contextPath}/gmf/recette/delete/${recette.id}'
              class="btn">Supprimer</a></td>

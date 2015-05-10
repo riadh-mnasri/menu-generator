@@ -3,6 +3,7 @@ package com.github.rmnasri.controller;
 import com.github.rmnasri.model.Recette;
 import com.github.rmnasri.service.RecetteService;
 import com.github.rmnasri.validator.RecetteValidator;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,18 @@ public class WelcomeController {
         return mav;
     }
 
+    @RequestMapping(value = "/recette/edit/{id}")
+    public ModelAndView editRecette(@PathVariable("id") Long idRecette) {
+        ModelAndView mav = new ModelAndView("welcome");
+        Recette recetteFound = recetteService.findRecette(idRecette);
+        RecetteForm recetteForm = new RecetteForm();
+        recetteForm.setId(recetteFound.getId());
+        recetteForm.setRecetteName(recetteFound.getRecetteName());
+        mav.addObject("recetteForm", recetteForm);
+        addCommonDataToMav(mav);
+        return mav;
+    }
+
     @RequestMapping(value = "/recette/delete/{id}")
     public ModelAndView deleteRecette(@PathVariable("id") Long idRecette) {
         ModelAndView mav = new ModelAndView("redirect:/gmf/welcome");
@@ -83,7 +96,10 @@ public class WelcomeController {
 
     private Recette mapRecette(@ModelAttribute("recetteForm") RecetteForm recetteForm) {
         Recette recetteModel = new Recette();
-        //recetteModel.setId(recetteForm.getId());
+        Long idRecette = recetteForm.getId();
+        if(idRecette != null){
+            recetteModel.setId(idRecette);
+        }
         recetteModel.setRecetteName(recetteForm.getRecetteName());
         return recetteModel;
     }
