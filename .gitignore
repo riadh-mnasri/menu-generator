@@ -17,4 +17,5 @@ log/
 target/
 
 # Generated Files
+logs/
 *.log

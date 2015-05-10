@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration scan="true" scanPeriod="30 seconds">
+    <property name="LOGS_FOLDER" value="${user.home}//Documents/workspaces/WS_CRUD_SPRING_BOOT_WEB_APPLI/gmf/logs"/>
+    <property name="OLD_LOGS_FOLDER" value="${LOGS_FOLDER}/old"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
@@ -7,12 +9,26 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
         </encoder>
     </appender>
-    <logger name="com.github.rmnasri" level="INFO" additivity="false">
-        <appender-ref ref="STDOUT" />
+    <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_FOLDER}/gmf.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${OLD_LOGS_FOLDER}/gmf.%d{yyyyMMdd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy/MM/dd HH:mm:ss.SSS,Europe/Paris} [%thread] %-5level %logger{36} - %m %throwable{0}%n
+            </pattern>
+        </encoder>
+    </appender>
+    <logger name="com.github.rmnasri" level="DEBUG" additivity="false">
+        <appender-ref ref="logfile"/>
     </logger>
     <!-- Strictly speaking, the level attribute is not necessary since -->
     <!-- the level of the root level is set to DEBUG by default.       -->
     <root level="DEBUG">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="logfile"/>
     </root>
 </configuration>
