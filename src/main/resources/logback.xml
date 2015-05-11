@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="10 seconds">
-    <property name="LOGS_FOLDER" value="${user.home}//Documents/workspaces/WS_CRUD_SPRING_BOOT_WEB_APPLI/gmf/logs"/>
+    <property name="LOGS_FOLDER" value="${user.home}/temp/gmf/logs"/>
     <property name="OLD_LOGS_FOLDER" value="${LOGS_FOLDER}/old"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
